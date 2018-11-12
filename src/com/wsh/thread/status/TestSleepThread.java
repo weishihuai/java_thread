@@ -8,27 +8,39 @@ import java.util.Date;
  * @Author: weishihuai
  * @Date: 2018/11/11 21:31
  * <p>
- * 1. 倒计时
- * 2. 模拟网络延时
+ * 1. 注意：sleep()方法使用的位置，如果使用在main线程执行代码中，则阻塞的是main线程。如果在其他线程执行的代码中，则阻塞的是执行这些代码的线程
+ * 2. 案例: 倒计时功能
  */
 public class TestSleepThread {
     public static void main(String[] args) throws InterruptedException {
-        Date now = new Date(System.currentTimeMillis() + 1000 * 10);
-        long nowTime = now.getTime();
+        countDown(10000);
+    }
+
+    /**
+     * 倒计时方法
+     *
+     * @param mills 倒计时开始的时间距离当前时间多少毫秒
+     */
+    public static void countDown(long mills) {
+        Date endDate = new Date(System.currentTimeMillis() + mills);
+        long endTime = endDate.getTime();
 
         while (true) {
-            System.out.println(new SimpleDateFormat("mm:ss").format(now));
+            System.out.println(new SimpleDateFormat("hh:mm:ss").format(endDate));
             //下一秒时间
-            now = new Date(now.getTime() - 1000);
+            endDate = new Date(endDate.getTime() - 1000);
             //休眠一秒钟
-            Thread.sleep(1000);
-            //倒计时十秒
-            if (nowTime - now.getTime() > 10000) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (endTime - endDate.getTime() > mills) {
                 break;
             }
         }
-
     }
+
 }
 
 

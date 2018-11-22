@@ -25,7 +25,7 @@ public class Test04 {
 class AppleRunnable implements Runnable {
 
     // 共享资源(苹果总数量)
-    private int num = 30;
+    private int num = 10;
     //线程运行标识
     private boolean flag = true;
 
